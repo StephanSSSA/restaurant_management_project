@@ -1,4 +1,4 @@
-from django.urls import path
+fromdjango.contrib impot adminfrom django.urls import path,include
 from .views import *
 
 urlpatterns = [
