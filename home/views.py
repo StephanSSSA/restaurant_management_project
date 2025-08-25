@@ -6,5 +6,6 @@ def index(request):
     return render(request, 'home/index.html',{"restarunt_name": restarunt_name})
 def about(request):
     return render(request, "about.html")
-
+def contact(request):
+    return render(request, "home/contact.html")
 
