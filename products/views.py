@@ -24,3 +24,13 @@ class ItemView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def menu(request)
+        menu_items = [
+            {"name": "Chicken Biriyani", "price": 180},
+            {"name": "Mutton Biriyani", "price": 250},
+            {"name": "Panner Butter Masala", "price": 150},
+            {"name": "Parotta", "price": 30},
+            {"name": "Falooda", "price": 120},
+        ]
+        return render(request, "products/menu.html", {"menu_items": menu_item})
