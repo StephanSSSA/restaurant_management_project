@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lag="en">
-<head>
-    <meta charset="utf-8">
-    <title>{{Spicy Food Corner}}</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Home - {{ Spicy Food Corner }}{% endblock %}
+
+{% block content %}
     <h1>Welcome to our Spicy Food Corner</h1>
     <p>Contact us: {{ phone_number }}</p>
     <p>We are happy to serve delicious food!</p>
-</body>
-</html>
+{% endblock %}
