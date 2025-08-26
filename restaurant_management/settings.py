@@ -130,4 +130,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #custom project setting
 restaurant_name = "Spicy Food Corner"
-restaurant_phone = "+91 76959 60636"
+RESTARURANT_PHONE = "+91 76959 60636"
