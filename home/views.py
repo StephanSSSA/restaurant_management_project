@@ -8,4 +8,7 @@ def about(request):
     return render(request, "about.html")
 def contact(request):
     return render(request, "home/contact.html")
+def home(request):
+    phone_number = settings.RESTARUNT_PHONE
+    return render(request, "home.html", {"phone_number": phone_number})
 
