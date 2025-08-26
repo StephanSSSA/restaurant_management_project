@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Restaurant{% endblock %}</title>
+</head>
+<body>
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+    <footer style="margin-top:20px; text-align:center; font-size:14px; color:gray;">
+        <p>&copy; {{ current_year }} Spicy Food Corner. All rihts reserved.</p>
+    </footer>
+</body>
+</html>
