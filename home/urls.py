@@ -9,4 +9,5 @@ urlpatterns = [
     path("products/", include(products.urls)),
     path("contact/", views.contact, name="contact"),
     path("", view.home, name="home"),
+    path("reservations/", view.reservations name="reservations"),
 ]
