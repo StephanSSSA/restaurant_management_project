@@ -1,3 +1,4 @@
+import datetime
 from django.conf import settings
 from django.shortcuts import render
 
@@ -14,5 +15,11 @@ def home(request):
 def home(request):
     return render(request, "home/home.html", {
         "restuarant_name": settings.RESTARUNT_NAME,
+        "current_year": datetime.today().year,
     })
+
+    def reservations(request):
+        return render(request, "home/reservations.html",{
+            "current_year": datetime.date.today().year,
+        })
 
