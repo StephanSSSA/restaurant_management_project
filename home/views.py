@@ -1,6 +1,9 @@
 import datetime
 from django.conf import settings
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.db import DatabaseError
+from .Models import MenuItem
 
 def index(request):
     restarunt_name = settings.RESTARUNT_NAME
@@ -18,8 +21,15 @@ def home(request):
         "current_year": datetime.today().year,
     })
 
-    def reservations(request):
-        return render(request, "home/reservations.html",{
-            "current_year": datetime.date.today().year,
+def reservations(request):
+    return render(request, "home/reservations.html",{
+        "current_year": datetime.date.today().year,
         })
+
+def menu_view(request):
+    try:
+        items = MenuItem.objects.all()
+        return render(request, "menu.html", {"items": iems})
+    except Exception as e:
+        return HttpResponse(f"An unexcepted error occured: {str(e)}", status=500)
 
