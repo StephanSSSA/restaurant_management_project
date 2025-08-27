@@ -10,4 +10,5 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("", view.home, name="home"),
     path("reservations/", view.reservations name="reservations"),
+    path("menu/", views.menu_view, name="menu"),
 ]
