@@ -3,12 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Restaurant{% endblock %}</title>
+    <style>
+        body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .content {
+         flex: 1;
+    }
+    footer {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: gray;
+        padding: 10px 0;
+        border-top: 1px solid #ddd;
+    }
+    </style>
 </head>
 <body>
-    <div>
+    <div class="content">
         {% block content %}{% endblock %}
     </div>
-    <footer style="margin-top:20px; text-align:center; font-size:14px; color:gray;">
+    <footer>
         <p>&copy; {{ current_year }} Spicy Food Corner. All rihts reserved.</p>
     </footer>
 </body>
