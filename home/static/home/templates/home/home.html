@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Home - {{ Spicy Food Corner }}{% endblock %}
+{% block title %}Home - Spicy Food Corner{% endblock %}
 
 {% block content %}
 <div style="text-align:center;">
@@ -8,8 +8,36 @@
 <style>
     h1 { color: #de5400; }
     p { color:#333; font-size:18px;}
+    .search-bar {
+        margin-top: 30px;
+    }
+    .search-bar input[type="text"] {
+        width: 250px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radus: 8px;
+    }
+    .search-bar button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radus: 8px;
+    cursor: pointer;
+    }
+    .search-bar button:hover {
+        background-color: #0056b3;
+    }
 </style>
     <h1>Welcome to our Spicy Food Corner</h1>
     <p>Contact us: {{ phone_number }}</p>
     <p>We are happy to serve delicious food!</p>
+
+    <div class="search-bar">
+        <form method="get">
+            <input type="text" name="search" placeholder="search menu items...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
