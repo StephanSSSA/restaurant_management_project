@@ -1,4 +1,4 @@
-import datetime
+import datetime import datetime
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -16,9 +16,10 @@ def home(request):
     phone_number = settings.RESTARUNT_PHONE
     return render(request, "home.html", {"phone_number": phone_number})
 def home(request):
-    return render(request, "home/home.html", {
-        "restuarant_name": settings.RESTARUNT_NAME,
-        "current_year": datetime.today().year,
+    return render(request, "home.html", {
+        "restuarant_name": "Spicy Food Corner",
+        "phone number": "+91 7695960636",
+        "current_year": datetime.now().year,
     })
 
 def reservations(request):
