@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Feedback - Spicy Food Corner{% endblock %}
+
+{% block content %}
+<div style="text align:center; margin-top:30px">
+    <h2>Leave Your Feedback</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" style="padding:10px 20px; background:#007BFF; color:white; border:none; border-radius:5px; cursor:pointer;">
+            submit
+        </button>
+    </form>
+</div>
+{% endblock %}
