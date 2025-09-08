@@ -20,6 +20,7 @@ def home(request):
         "restuarant_name": "Spicy Food Corner",
         "phone number": "+91 7695960636",
         "current_year": datetime.now().year,
+        "opening_hours": "Mon-Fri: 11am-9pm, Sat-Sun: 10am-10pm",
     })
 
 def reservations(request):
