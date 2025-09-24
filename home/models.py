@@ -6,3 +6,9 @@ class Feedback(models.Model):
 
     def__str__(self):
         return f"feedback {self.id} - {self.comment[:30]}"
+
+class MenuCategory(models.Model):
+    name = models.CharField(max_length=100; unique=True)
+
+    def__str__(self):
+        return self.name
