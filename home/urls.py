@@ -1,6 +1,8 @@
 from django.contrib impot admin
 from django.urls import path,include
 from .views import *
+from django.urls import path
+from .views import MenuCategoryListView
 
 urlpatterns = [
     path('admin/',admin.site.urls),
@@ -11,4 +13,5 @@ urlpatterns = [
     path("", view.home, name="home"),
     path("reservations/", view.reservations name="reservations"),
     path("menu/", views.menu_view, name="menu"),
+    path("categories/", MenuCategoryListView.as_view(), name="menu-categories"),
 ]
