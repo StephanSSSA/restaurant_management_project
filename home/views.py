@@ -4,6 +4,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.db import DatabaseError
 from .Models import MenuItem
+from rest_framework.generics import ListAPIView
+from .models import MenuCategory
+from .serializers import MenuCategorySerializer
 
 def index(request):
     restarunt_name = settings.RESTARUNT_NAME
@@ -34,4 +37,6 @@ def menu_view(request):
         return render(request, "menu.html", {"items": iems})
     except Exception as e:
         return HttpResponse(f"An unexcepted error occured: {str(e)}", status=500)
-
+class MenuCategoryListView(ListAPIView):
+    queryset = MenuCategory.objects.all()
+    serializer_class = MenuCategorySerializer
