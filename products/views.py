@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, views
+from utils.validation_utils import is_valid_email
 
 from .models import Item
 from .serializers import ItemSerializer
@@ -34,3 +35,13 @@ class ItemView(APIView):
             {"name": "Falooda", "price": 120},
         ]
         return render(request, "products/menu.html", {"menu_items": menu_item})
+
+    class RegisterUserView(views.APIView):
+        def post(self, request):
+            email = request.data.get("email")
+
+            if not is_valid_email(email):
+                return Response({"error": "Invalid email address:"}, status=status.HTTP_400_BAD_REQUEST)
+
+                return Response({"message": "Email is valid!"}, status=status.HTTP_200_OK)
+
