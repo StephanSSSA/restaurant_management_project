@@ -7,6 +7,10 @@ from .Models import MenuItem
 from rest_framework.generics import ListAPIView
 from .models import MenuCategory
 from .serializers import MenuCategorySerializer
+from rest_framework import viewsets, pagination
+from rest_framework.response import Response
+from .models import MenuItem
+from .serializers import MenuItemSerializer
 
 def index(request):
     restarunt_name = settings.RESTARUNT_NAME
@@ -40,3 +44,22 @@ def menu_view(request):
 class MenuCategoryListView(ListAPIView):
     queryset = MenuCategory.objects.all()
     serializer_class = MenuCategorySerializer
+
+class MenuItemPagination(pagination.PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 50
+
+class MenuItemViewSet(viewset.ViewSet):
+
+    def list(self, request):
+        query = request.query_params.get('search', None)
+        queryset = MenuItem.objects.all()
+
+        if query:
+            queryset = queryset.filter(name__icontains=query)
+
+        paginator = MenuItemPagination()
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = MenuItemSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
