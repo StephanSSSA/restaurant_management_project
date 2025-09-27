@@ -20,4 +20,5 @@ urlpatterns = [
     path("menu/", views.menu_view, name="menu"),
     path("categories/", MenuCategoryListView.as_view(), name="menu-categories"),
     path('', include(router.urls))
+    path('api/users/', include('users.urls')),
 ]
