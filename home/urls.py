@@ -3,6 +3,11 @@ from django.urls import path,include
 from .views import *
 from django.urls import path
 from .views import MenuCategoryListView
+from rest_framework.routers import DefaultRouter
+from .views import MenuItemViewSet
+
+router = DefaultRouter()
+router.register(r'menu-items', MenuItemViewSet, basename='menuitem')
 
 urlpatterns = [
     path('admin/',admin.site.urls),
@@ -14,4 +19,5 @@ urlpatterns = [
     path("reservations/", view.reservations name="reservations"),
     path("menu/", views.menu_view, name="menu"),
     path("categories/", MenuCategoryListView.as_view(), name="menu-categories"),
+    path('', include(router.urls))
 ]
