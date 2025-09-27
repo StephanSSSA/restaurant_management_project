@@ -11,6 +11,10 @@ from rest_framework import viewsets, pagination
 from rest_framework.response import Response
 from .models import MenuItem
 from .serializers import MenuItemSerializer
+from rest_framework import viewsets
+from rest_framework.permissions import IsAdminUser
+from .models import MenuItem
+from .serializers import MenuItemSerializer
 
 def index(request):
     restarunt_name = settings.RESTARUNT_NAME
@@ -63,3 +67,8 @@ class MenuItemViewSet(viewset.ViewSet):
         result_page = paginator.paginate_queryset(queryset, request)
         serializer = MenuItemSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
+
+class MenuItemViewset(viewset.ModelViewset):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemSerializer
+    permission_classes = [IsAdminUser]
