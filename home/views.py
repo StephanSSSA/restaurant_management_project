@@ -15,6 +15,10 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser
 from .models import MenuItem
 from .serializers import MenuItemSerializer
+from rest_framework.response import Response
+from rest_framework import status, generics
+from .models import MenuItems
+from .serializers import MenuItemSerializer
 
 def index(request):
     restarunt_name = settings.RESTARUNT_NAME
@@ -72,3 +76,14 @@ class MenuItemViewset(viewset.ModelViewset):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
     permission_classes = [IsAdminUser]
+
+class MenuItemsByCategoryview(generics.ListAPIView):
+    serializer_class = MenuItemSerializer
+
+    def get_queryset(self):
+        queryset = MenuItems.objects.all()
+        category = self.request.query_params.get("category", None)
+
+        if category:
+            queryset = queryset.filter(category__category_name__iexact=category)
+            return queryset
