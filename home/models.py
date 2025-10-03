@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import user
+from menu.models import MenuItems
 
 class Feedback(models.Model):
     comment = models.TextField()
@@ -29,3 +31,19 @@ class MenuItem(models.Model):
 
     def__str__(self):
         return self.name
+
+class order(models.Model):
+    user = models.Foreignkey(user, on_delete=models.CASCADE, related_name="orders")
+    created_at = models.DateTimeField(auto_now_add=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def__str__(self):
+        return f"order {self.id} by {self.user.username}"
+
+class OrderItem(models.Model):
+    order = models.Foreignkey(order, on_delete=models.CASCADE, related_name="items")
+    menu_item = models.Foreignkey(menuItems, on_delete=models.CASCADE)
+    quantity = models.positiveIntegerField(default=1)
+
+def__str__(self):
+    return f"{self.menu_item.name} (x{self.quantity})"
