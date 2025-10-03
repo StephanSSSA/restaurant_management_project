@@ -5,6 +5,7 @@ from django.urls import path
 from .views import MenuCategoryListView
 from rest_framework.routers import DefaultRouter
 from .views import MenuItemViewSet
+from .views import MenuItemsByCategoryView
 
 router = DefaultRouter()
 router.register(r'menu-items', MenuItemViewSet, basename='menuitem')
@@ -21,4 +22,5 @@ urlpatterns = [
     path("categories/", MenuCategoryListView.as_view(), name="menu-categories"),
     path('', include(router.urls))
     path('api/users/', include('users.urls')),
+    path("menu-items/", MenuItemsByCategoryView.as_view(), name="menu-items-by-category")
 ]
