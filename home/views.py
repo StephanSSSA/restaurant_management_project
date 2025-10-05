@@ -20,6 +20,7 @@ from rest_framework import status, generics
 from .models import MenuItems
 from .serializers import MenuItemSerializer
 from rest_framework.views import ListAPIView
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import is Authenticated
 from .models import Order
@@ -100,3 +101,7 @@ class OrderHistoryView(APIView):
         user = request.user
         orders = Order.objects.filter(user=user).order_by("-created_at")
         serializer = OrderSerializer(orders, many=True) return Response(serializer.data)
+
+    def get(self, request):
+        orders = Order.objects.filter(user=request.user)
+        return Response(OrderSerializer(orders, many=True).data)
