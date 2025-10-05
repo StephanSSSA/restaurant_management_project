@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include(router.urls))
     path('api/users/', include('users.urls')),
     path("menu-items/", MenuItemsByCategoryView.as_view(), name="menu-items-by-category")
+    path("order-history/", Order-HistoryView.as_view(), name="order-history"),
 ]
