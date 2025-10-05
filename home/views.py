@@ -19,6 +19,11 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from .models import MenuItems
 from .serializers import MenuItemSerializer
+from rest_framework.views import ListAPIView
+from rest_framework.response import Response
+from rest_framework.permissions import is Authenticated
+from .models import Order
+from .serializers import OrderSerializer
 
 def index(request):
     restarunt_name = settings.RESTARUNT_NAME
@@ -87,3 +92,11 @@ class MenuItemsByCategoryview(generics.ListAPIView):
         if category:
             queryset = queryset.filter(category__category_name__iexact=category)
             return queryset
+
+class OrderHistoryView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self,request):
+        user = request.user
+        orders = Order.objects.filter(user=user).order_by("-created_at")
+        serializer = OrderSerializer(orders, many=True) return Response(serializer.data)
