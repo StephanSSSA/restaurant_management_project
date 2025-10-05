@@ -47,3 +47,14 @@ class OrderItem(models.Model):
 
 def__str__(self):
     return f"{self.menu_item.name} (x{self.quantity})"
+
+class Order(models.Model):
+    user = models.Foreignkey(user, on_delete=models.CASCADE, related_name='orders')
+    date = models.DateTimeField(auto_now_add=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+class OrderItem(models.Model):
+    order = models.Foreignkey(order, on_delete=models.CASCADE, related_name='items')
+    product_name = models.CharField(max_length=225)
+    quantity = models.positiveIntegerField()
+    price = models.DateTimeField(max_digits=10, decimal_places=2)
