@@ -25,6 +25,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import is Authenticated
 from .models import Order
 from .serializers import OrderSerializer
+from rest_framework import generics
+from .models import Table
+from .serializers import TableSerializer
 
 def index(request):
     restarunt_name = settings.RESTARUNT_NAME
@@ -105,3 +108,8 @@ class OrderHistoryView(APIView):
     def get(self, request):
         orders = Order.objects.filter(user=request.user)
         return Response(OrderSerializer(orders, many=True).data)
+    
+    class TableDetailAPIView(generics.RetrieveAPIView):
+        queryset = Table.objects.all()
+        serializer_class = TableSerializer
+        lookup_field = 'pk'
