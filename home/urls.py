@@ -6,6 +6,7 @@ from .views import MenuCategoryListView
 from rest_framework.routers import DefaultRouter
 from .views import MenuItemViewSet
 from .views import MenuItemsByCategoryView
+from .views import TableDetailAPIView
 
 router = DefaultRouter()
 router.register(r'menu-items', MenuItemViewSet, basename='menuitem')
@@ -24,4 +25,5 @@ urlpatterns = [
     path('api/users/', include('users.urls')),
     path("menu-items/", MenuItemsByCategoryView.as_view(), name="menu-items-by-category")
     path("order-history/", Order-HistoryView.as_view(), name="order-history"),
+    path('api/tables/<int:pk>/', TableDetailAPIView.as_view(), name='table-detail'),
 ]
