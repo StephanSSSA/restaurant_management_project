@@ -19,3 +19,7 @@ class Order(models.Model):
 
     def__str__(self):
         return f"Order {self.id} - {self.customer_name}"
+
+    class ActiveOrderManager(models.Manager):
+        def get_active_orders(self):
+            return self.get_queryset().filter(status__in=['pending', 'processing'])
