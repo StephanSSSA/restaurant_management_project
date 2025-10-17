@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import MenuItems
 from .models import Order, OrderItem
+from .models import Table
 
 
 class MenuCategorySerializer(serializers.ModelSerializer):
@@ -26,3 +27,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ["id", "created_at", "total_price", "items"]
+    
+    class TableSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Table
+            fields = ['table_number', 'capacity', 'is_available']
