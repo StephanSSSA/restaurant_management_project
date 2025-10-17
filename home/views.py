@@ -113,3 +113,7 @@ class OrderHistoryView(APIView):
         queryset = Table.objects.all()
         serializer_class = TableSerializer
         lookup_field = 'pk'
+
+    class AvailableTableAPIView(generics.ListAPIView):
+        queryset = Table.objects.filter(is_available=True)
+        serializer_class = TableSerializer
