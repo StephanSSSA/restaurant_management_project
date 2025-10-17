@@ -7,6 +7,8 @@ from rest_framework.routers import DefaultRouter
 from .views import MenuItemViewSet
 from .views import MenuItemsByCategoryView
 from .views import TableDetailAPIView
+from django.urls import path
+from .views import AvailableTableAPIView
 
 router = DefaultRouter()
 router.register(r'menu-items', MenuItemViewSet, basename='menuitem')
@@ -26,4 +28,5 @@ urlpatterns = [
     path("menu-items/", MenuItemsByCategoryView.as_view(), name="menu-items-by-category")
     path("order-history/", Order-HistoryView.as_view(), name="order-history"),
     path('api/tables/<int:pk>/', TableDetailAPIView.as_view(), name='table-detail'),
+    path('api/tables/available', AvailableTableAPIView.as_view(), name='available_tables_api')
 ]
