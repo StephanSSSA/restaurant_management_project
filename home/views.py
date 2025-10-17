@@ -117,3 +117,26 @@ class OrderHistoryView(APIView):
     class AvailableTableAPIView(generics.ListAPIView):
         queryset = Table.objects.filter(is_available=True)
         serializer_class = TableSerializer
+    
+    class OrderCreateAPIView(APIView):
+        def post(self, request):
+            customer_email = request.data.get('email')
+            customer_name = request.data.get('name')
+            total_amount = request.data.get('total')
+            order = Order.objects.create(
+                customer_name=customer_name,
+                customer_email=customer_email,
+                total_amount=total_amount
+            )
+
+            email_status = send_order_confirmation_email(
+                order_id=order.id,
+                customer_email=customer_email,
+                customer_name=customer_name,
+                total_amount=total_amount
+            )
+
+            return Response({
+                "order_id": order.id,
+                "email_status": email_status
+            })
