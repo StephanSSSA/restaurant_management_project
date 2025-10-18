@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import MenuItems
 from .models import Order, OrderItem
 from .models import Table
+from django.contrib.auth.models import user
 
 
 class MenuCategorySerializer(serializers.ModelSerializer):
@@ -32,3 +33,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
         class Meta:
             model = Table
             fields = ['table_number', 'capacity', 'is_available']
+    
+    class Userprofileserializer(serializers.ModelSerializer):
+        class Meta:
+            model = User
+            fields = ['first_name', 'last_name', 'email']
+            read_only_fields = ['username']
