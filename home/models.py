@@ -58,3 +58,17 @@ class OrderItem(models.Model):
     product_name = models.CharField(max_length=225)
     quantity = models.positiveIntegerField()
     price = models.DateTimeField(max_digits=10, decimal_places=2)
+
+class Restaurant(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.TextField()
+    phone = models.CharField(max_length=15)
+    email = models.EmailField(blank=True, null=True)
+
+    operating_days = models.CharField(
+        max_length=100,
+        help_text="Enter operating days (e.g., Mon,Tue,Wed,Thur,Fri,Sat,Sun)"
+    )
+
+    def__str__(self):
+        return self.name
