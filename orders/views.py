@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+from rest_framework import generics, permissions
+from .serializers import OrderSerializer
 from .forms import FeedbackForm
 
 def feedback_view(request):
@@ -11,3 +12,8 @@ def feedback_view(request):
     else:
         form = FeedbackForm()
     return render(request, "feedback.html", {"form": form})
+
+class OrderDeltaView(generics.RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
