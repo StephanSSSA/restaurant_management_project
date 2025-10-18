@@ -29,4 +29,5 @@ urlpatterns = [
     path("order-history/", Order-HistoryView.as_view(), name="order-history"),
     path('api/tables/<int:pk>/', TableDetailAPIView.as_view(), name='table-detail'),
     path('api/tables/available', AvailableTableAPIView.as_view(), name='available_tables_api')
+    path('api/', include('accounts.urls')),
 ]
