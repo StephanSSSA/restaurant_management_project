@@ -28,6 +28,10 @@ from .serializers import OrderSerializer
 from rest_framework import generics
 from .models import Table
 from .serializers import TableSerializer
+from rest_framework import generics, status
+from rest_framework.response import Response
+from .models import ContactFormSubmission
+from .serializers import ContactFormSubmissionSerializer
 
 def index(request):
     restarunt_name = settings.RESTARUNT_NAME
@@ -140,3 +144,17 @@ class OrderHistoryView(APIView):
                 "order_id": order.id,
                 "email_status": email_status
             })
+    
+    class ContactFormSubmissionView(generics.CreateAPIView):
+        queryset = ContactFormSubmission.objects.all()
+        serializer_class = ContactFormSubmissionSerializer
+
+        def create(self, request, args, kwargs):
+            serializer = self.get_serializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(
+                    {"messge"; "your message has been received!", "data": serializer.data},
+                    status=status.HTTP_201_CREATED
+                )
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
