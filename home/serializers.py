@@ -4,6 +4,7 @@ from .models import Order, OrderItem
 from .models import Table
 from django.contrib.auth.models import user
 from .models import Order
+from .models import ContactFormSubmission
 
 
 class MenuCategorySerializer(serializers.ModelSerializer):
@@ -55,3 +56,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
         class Meta:
             model = Order
             fields = '__all__'
+
+    class ContactFormSubmissionSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = ContactFormSubmission
+            fields = ['id', 'name', 'email', 'message', 'submitted_at']
