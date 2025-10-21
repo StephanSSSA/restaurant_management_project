@@ -92,3 +92,12 @@ class Order(models.Model):
 
     def__str__(self):
         return f"order {self.id}"
+
+class ContactFormSubmission(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def__str__(self):
+        return f"{self.name} - {self.email}" 
