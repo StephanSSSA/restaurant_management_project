@@ -10,6 +10,10 @@ import logging
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import OrderViewSet
+from .models import Order
+from django.db import models
+from django.contrib.auth.models import user
+from .utils import generate_unique_order_id
 
 
 def generate_coupon_code(length=10):
@@ -78,3 +82,32 @@ def is_restaurant_open():
     router = DefaultRouter()
     router.register('orders', OrderViewSet)
     urlpatterns = [path('', include(router.urls))]
+
+def generate_unique_order_id(length=8):
+    characters = string.ascii_uppercase + string.digits
+
+    while True:
+        order_id = ''.join(secrets.choice(characters) for _ in range(length))
+        if not Order.objects.filter(order_id=order_id).exists():
+            return order_id
+    
+class Order(models.Model:
+    STATUS = [
+        ('pending', 'pending'),
+        ('processing', 'processing'),
+        ('cancelled', 'cancelled'),
+        ('completed', 'completed'),
+    ]
+
+    user = models.Foreignkey(User, on_delete=models.CASCADE)
+    order_id = models.CharField(max_length=10, unique=True, editable=False)
+    product_name = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, choices=STATUS, Default='pending')
+
+    def save(self, *args, kwargs):
+        if not self.order_id:
+            self.order_id = generate_unique_order_id()
+        super().save(args, kwargs)
+
+    def__str__(self):
+        return f"{self.order_id} - {self.product_name}"
