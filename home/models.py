@@ -83,3 +83,12 @@ class OrderItem(models.Model):
     order = models.Foreignkey(Order, related_name='item', on_delete=models.CASCADE)
     product = models.Foreignkey(product, on_delete=models.CASCADE)
     quantity = models.positiveIntegerField() 
+
+class Order(models.Model):
+    STATUS = [('pending','pending'), ('processing','processing'),('cancelled','cancelled'),('completed','completed')]
+    user = models.Foreignkey(User, on_delete=models.CASCADE)
+    product_name = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, choices=STATUS, default='pending')
+
+    def__str__(self):
+        return f"order {self.id}"
