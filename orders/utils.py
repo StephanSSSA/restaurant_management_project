@@ -7,6 +7,9 @@ from .models import Order
 from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
 import logging
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import OrderViewSet
 
 
 def generate_coupon_code(length=10):
@@ -71,3 +74,7 @@ def is_restaurant_open():
         except BadHeaderError:
             logger.error(f"Invalid header found when sending email to {customer_email}")
             return {"status": "error", "message": str(e)}
+
+    router = DefaultRouter()
+    router.register('orders', OrderViewSet)
+    urlpatterns = [path('', include(router.urls))]
