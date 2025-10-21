@@ -10,4 +10,5 @@ urlpatterns = [
     path("menu/", views.menu, name="menu"),
     path('', include(router.urls)),
     path('<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
+    path('api/', include('home.urls')),
 ]
