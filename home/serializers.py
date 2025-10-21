@@ -3,6 +3,7 @@ from .models import MenuItems
 from .models import Order, OrderItem
 from .models import Table
 from django.contrib.auth.models import user
+from .models import Order
 
 
 class MenuCategorySerializer(serializers.ModelSerializer):
@@ -49,3 +50,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
         class Meta:
             model = Order
             fields = ['id', 'customer', 'total_price', 'created_at', 'items']
+    
+    class OrderSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Order
+            fields = '__all__'
