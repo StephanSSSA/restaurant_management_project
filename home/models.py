@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import user
 from menu.models import MenuItems
 from products.models import product
+from decimal import Decimal
+from home.models import MenuItem
 
 class Feedback(models.Model):
     comment = models.TextField()
@@ -101,3 +103,25 @@ class ContactFormSubmission(models.Model):
 
     def__str__(self):
         return f"{self.name} - {self.email}" 
+
+class Order(models.Model):
+    customer_name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def__str__(self):
+        return f"order #{self.id} by {self.customer_name}"
+
+    def calculate_total(self):
+        total = Decimal('0.00')
+        for item in self.order_items.all():
+            total += item.price * item.quantity
+        return total
+
+class OrderItem(moels.Model):
+    order = models.Foreignkey(Order, on_delete=models.CASCADE, related_name="order_items")
+    menu_item = models.Foreignkey(MenuItem, on_delete=models.CASCADE)
+    quantity = models.positiveIntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def__str__(self):
+        return f"{self.menu_item.name} x {self.quantity}"
