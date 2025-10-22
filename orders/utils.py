@@ -14,6 +14,10 @@ from .models import Order
 from django.db import models
 from django.contrib.auth.models import user
 from .utils import generate_unique_order_id
+from django.core.mail import send_mail, BadHeaderError
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 
 
 def generate_coupon_code(length=10):
@@ -111,3 +115,26 @@ class Order(models.Model:
 
     def__str__(self):
         return f"{self.order_id} - {self.product_name}"
+
+    def send_custom_email(recipient_email, subject, message_body):
+        try:
+            validate_email(recipient_email)
+
+            send_mail(
+                subject=subject,
+                message=message_body,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[recipient_email],
+                fail_slently=False,
+            )
+            return True
+
+        except ValidationError:
+            print("Invalid email address provided.")
+            return False
+        except BadHeaderError:
+            print("Invalid header found.")
+            return False
+        except Exception as e:
+            print(f"Error sending email: {e}")
+            return False
