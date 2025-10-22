@@ -32,6 +32,12 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from .models import ContactFormSubmission
 from .serializers import ContactFormSubmissionSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .utils import send_custom_email
+from .models import ContactFormSubmission
+from .serializers import ContactFormSubmissionSerializer
 
 def index(request):
     restarunt_name = settings.RESTARUNT_NAME
@@ -157,4 +163,23 @@ class OrderHistoryView(APIView):
                     {"messge"; "your message has been received!", "data": serializer.data},
                     status=status.HTTP_201_CREATED
                 )
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    class ContactFormSubmissionView(APIView):
+        def post(self, request):
+            serializer = ContactFormSubmissionSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+
+                recipient = serializer.validated_data['email']
+                subject = "Thank you for contacting us!"
+                message = f"Hello {serializer.validated_data['name']},\n\nwe received message:\n\{serializer.validatd_data['message']}\n\nwe'Il get back to you soon."
+
+                email_sent = send_custom_email(recipient, subject, message)
+
+                if email_sent:
+                    return Response({"message": "contact form submitted and email sent successfully."}, status=status.HTTP_201_CREATED)
+                else:
+                    return Response({"message": "Form saved, but email could not be sent."}, status=status.HTTP_500_201_CREATED)
+
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
