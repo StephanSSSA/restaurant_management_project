@@ -61,3 +61,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
         class Meta:
             model = ContactFormSubmission
             fields = ['id', 'name', 'email', 'message', 'submitted_at']
+
+    class MenuItemSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = MenuItem
+            fields = ['id', 'name', 'description', 'price', 'is_featured']
