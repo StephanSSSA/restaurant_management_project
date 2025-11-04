@@ -33,3 +33,14 @@ class Order(models.Model):
 
         def__str__(self):
             return self.code
+
+    class Restaurant(models.Model):
+        name = models.CharField(max_length=255)
+        address = models.TextField()
+        phone_number = models.CharField(max_length=20)
+        email = models.EmailField(blank=True, null=True)
+        has_delivery = models.BooleanField(default=False)
+
+        def__str__(self):
+            return self.name
+
