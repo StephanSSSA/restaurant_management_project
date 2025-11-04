@@ -153,3 +153,20 @@ class NutritionalInformation(models.Model):
 
     def__str__(self):
         return f"{self.menu_item.name} - {self.calories} kcal"
+
+class Dailyspecial(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    available = models.BooleanField(default=True)
+
+    def__str__(self):
+        return self.name
+
+    @staticmethod
+    def get_random_special():
+
+        specials = Dailyspecial.objects.filter(available=True)
+        if specials.exists():
+            return specials.order_by('?').first()
+        return None
