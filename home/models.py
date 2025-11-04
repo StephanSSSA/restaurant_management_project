@@ -125,3 +125,12 @@ class OrderItem(moels.Model):
 
     def__str__(self):
         return f"{self.menu_item.name} x {self.quantity}"
+
+class MenuItem(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    is_featured = models.BooleanField(default=False)
+
+    def__str__(self):
+        return self.name
