@@ -134,3 +134,22 @@ class MenuItem(models.Model):
 
     def__str__(self):
         return self.name
+
+class MenuItem(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    price = models.DateTimeField(max_digits=8, decimal_places=2)
+    is_featured = models.BooleanField(default=True)
+
+    def__str__(self):
+        return self.name
+
+class NutritionalInformation(models.Model):
+    menu_item = models.Foreignkey(MenuItem, on_delete=models.CASCADE, related_name='nutritional_info')
+    calories = models.IntegerField()
+    protein_grams = models.DecimalField(max_digits=5, decimal_places=2)
+    fat_grams = models.DecimalField(max_digits=5, decimal_places=2)
+    carbohydrate_grams = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def__str__(self):
+        return f"{self.menu_item.name} - {self.calories} kcal"
