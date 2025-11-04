@@ -18,6 +18,8 @@ from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from datetime import datetime
+from home.models import DailyOperatingHours
 
 
 def generate_coupon_code(length=10):
@@ -138,3 +140,20 @@ class Order(models.Model:
         except Exception as e:
             print(f"Error sending email: {e}")
             return False
+    
+    def get_today_operating_hours():
+
+        today_name = date.timenow().strftime("%A")
+
+        try:
+
+            today_hours = DailyOperatingHours.objects..filter(day__iexact=today_name).first()
+
+            if today_hours:
+                return today_hours.open_time, today_hours.close_time
+            else:
+                return (None, None)
+
+        except DailyOperatingHours.DoesNotExist:
+
+            return (None, None)
