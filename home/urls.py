@@ -10,7 +10,7 @@ from .views import TableDetailAPIView
 from django.urls import path
 from .views import AvailableTableAPIView
 from .views import ContactFormSubmissionView
-
+from .views import FeaturedMenuItemsView
 router = DefaultRouter()
 router.register(r'menu-items', MenuItemViewSet, basename='menuitem')
 
@@ -32,4 +32,5 @@ urlpatterns = [
     path('api/tables/available', AvailableTableAPIView.as_view(), name='available_tables_api')
     path('api/', include('accounts.urls')),
     path('contact/', ContactFormSubmissionView.as_view(), name='contact-form'),
+    path('featured-menu-items/', FeaturedMenuItemsView.as_view(), name='featured-menu-items'),
 ]
