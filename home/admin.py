@@ -13,3 +13,7 @@ class MenuItemAdmin(admin.ModelAdmin):
 @admin.register(NutritionalInformation)
 class NutritionalInformationAdmin(admin.ModelAdmin):
     list_display = ('menu_item', 'calories', 'protein_grams', 'fat_grams', 'carbohydrate_grams')
+
+@admin.register(Restaurant)
+class RestaurantAdmin(admin.ModelAdmin):
+    list_display = ('name', 'phone_number', 'has_delivery')
