@@ -183,3 +183,10 @@ class OrderHistoryView(APIView):
                     return Response({"message": "Form saved, but email could not be sent."}, status=status.HTTP_500_201_CREATED)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    class FeaturedMenuItemView(generics.ListAPIView):
+
+        serializer_class = MenuItemSerializer
+
+        def get_queryset(self):
+            return MenuItem.object.filter(is_featured=True)
