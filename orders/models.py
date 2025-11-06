@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Count
 
 class OrderStatus(models.Model):
     name = models.CharField(max_length=50; unique=True)
@@ -34,3 +35,11 @@ class MenuItem(models.Model):
 
     def__str__(self):
         return self.name
+
+class MenuItemManager(models.Manager):
+    def get_top_selling_items(self, num_items=5):
+
+        return (
+            self.annotate(total_orders=Count('order_items'))
+            .order_by('-total_orders')[:num_items]
+        )
