@@ -19,25 +19,9 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from .models import MenuItems
 from .serializers import MenuItemSerializer
-from rest_framework.views import ListAPIView
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import is Authenticated
-from .models import Order
-from .serializers import OrderSerializer
 from rest_framework import generics
-from .models import Table
-from .serializers import TableSerializer
-from rest_framework import generics, status
-from rest_framework.response import Response
-from .models import ContactFormSubmission
-from .serializers import ContactFormSubmissionSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .utils import send_custom_email
-from .models import ContactFormSubmission
-from .serializers import ContactFormSubmissionSerializer
+from .models import MenuItem
+from .serializers import MenuItemIngredientsSerializer
 
 def index(request):
     restarunt_name = settings.RESTARUNT_NAME
@@ -107,86 +91,6 @@ class MenuItemsByCategoryview(generics.ListAPIView):
             queryset = queryset.filter(category__category_name__iexact=category)
             return queryset
 
-class OrderHistoryView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self,request):
-        user = request.user
-        orders = Order.objects.filter(user=user).order_by("-created_at")
-        serializer = OrderSerializer(orders, many=True) return Response(serializer.data)
-
-    def get(self, request):
-        orders = Order.objects.filter(user=request.user)
-        return Response(OrderSerializer(orders, many=True).data)
-    
-    class TableDetailAPIView(generics.RetrieveAPIView):
-        queryset = Table.objects.all()
-        serializer_class = TableSerializer
-        lookup_field = 'pk'
-
-    class AvailableTableAPIView(generics.ListAPIView):
-        queryset = Table.objects.filter(is_available=True)
-        serializer_class = TableSerializer
-    
-    class OrderCreateAPIView(APIView):
-        def post(self, request):
-            customer_email = request.data.get('email')
-            customer_name = request.data.get('name')
-            total_amount = request.data.get('total')
-            order = Order.objects.create(
-                customer_name=customer_name,
-                customer_email=customer_email,
-                total_amount=total_amount
-            )
-
-            email_status = send_order_confirmation_email(
-                order_id=order.id,
-                customer_email=customer_email,
-                customer_name=customer_name,
-                total_amount=total_amount
-            )
-
-            return Response({
-                "order_id": order.id,
-                "email_status": email_status
-            })
-    
-    class ContactFormSubmissionView(generics.CreateAPIView):
-        queryset = ContactFormSubmission.objects.all()
-        serializer_class = ContactFormSubmissionSerializer
-
-        def create(self, request, args, kwargs):
-            serializer = self.get_serializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(
-                    {"messge"; "your message has been received!", "data": serializer.data},
-                    status=status.HTTP_201_CREATED
-                )
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    class ContactFormSubmissionView(APIView):
-        def post(self, request):
-            serializer = ContactFormSubmissionSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-
-                recipient = serializer.validated_data['email']
-                subject = "Thank you for contacting us!"
-                message = f"Hello {serializer.validated_data['name']},\n\nwe received message:\n\{serializer.validatd_data['message']}\n\nwe'Il get back to you soon."
-
-                email_sent = send_custom_email(recipient, subject, message)
-
-                if email_sent:
-                    return Response({"message": "contact form submitted and email sent successfully."}, status=status.HTTP_201_CREATED)
-                else:
-                    return Response({"message": "Form saved, but email could not be sent."}, status=status.HTTP_500_201_CREATED)
-
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    class FeaturedMenuItemView(generics.ListAPIView):
-
-        serializer_class = MenuItemSerializer
-
-        def get_queryset(self):
-            return MenuItem.object.filter(is_featured=True)
+class  MenuItemIngredientsView(generics.RetrieveAPIView):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemIngredientsSerializer
