@@ -6,11 +6,8 @@ from .views import MenuCategoryListView
 from rest_framework.routers import DefaultRouter
 from .views import MenuItemViewSet
 from .views import MenuItemsByCategoryView
-from .views import TableDetailAPIView
-from django.urls import path
-from .views import AvailableTableAPIView
-from .views import ContactFormSubmissionView
-from .views import FeaturedMenuItemsView
+from .views import MenuItemIngredientsView
+
 router = DefaultRouter()
 router.register(r'menu-items', MenuItemViewSet, basename='menuitem')
 
@@ -27,10 +24,5 @@ urlpatterns = [
     path('', include(router.urls))
     path('api/users/', include('users.urls')),
     path("menu-items/", MenuItemsByCategoryView.as_view(), name="menu-items-by-category")
-    path("order-history/", Order-HistoryView.as_view(), name="order-history"),
-    path('api/tables/<int:pk>/', TableDetailAPIView.as_view(), name='table-detail'),
-    path('api/tables/available', AvailableTableAPIView.as_view(), name='available_tables_api')
-    path('api/', include('accounts.urls')),
-    path('contact/', ContactFormSubmissionView.as_view(), name='contact-form'),
-    path('featured-menu-items/', FeaturedMenuItemsView.as_view(), name='featured-menu-items'),
+    path('api/menu-items/<int:pk>/ingredients/', MenuItemIngredientsView.as_view(), name='menuitem-ingredients'),
 ]
