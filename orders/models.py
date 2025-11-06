@@ -20,27 +20,17 @@ class Order(models.Model):
     def__str__(self):
         return f"Order {self.id} - {self.customer_name}"
 
-    class ActiveOrderManager(models.Manager):
-        def get_active_orders(self):
-            return self.get_queryset().filter(status__in=['pending', 'processing'])
+class Ingredient(models.Model):
+    name = models.CharField(max_length=100)
+    is_vegan = models.BooleanField(default=False)
 
-    class Coupon(models.Model):
-        code = models.CharField(max_length=50, unique=True)
-        discount_percentage = models.DecimalField(max_digit=5, decimal_places=2)
-        is_active = models.BooleanField(default=True)
-        valid_from = models.DateField()
-        valid_until = models.DateField()
+    def__str__(self):
+        return self.name
 
-        def__str__(self):
-            return self.code
+class MenuItem(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    ingredients = models.ManyToManyField(Ingredient, related_name='menu_items')
 
-    class Restaurant(models.Model):
-        name = models.CharField(max_length=255)
-        address = models.TextField()
-        phone_number = models.CharField(max_length=20)
-        email = models.EmailField(blank=True, null=True)
-        has_delivery = models.BooleanField(default=False)
-
-        def__str__(self):
-            return self.name
-
+    def__str__(self):
+        return self.name
